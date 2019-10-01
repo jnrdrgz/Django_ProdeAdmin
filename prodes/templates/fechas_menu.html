@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}PRODES{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <h1>FECHAS {{prode.nombre}}</h1>        
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+    {% for fecha in fechas %}
+    <button type="button" href="" class="btn btn-primary btn-block btn-dark">{{ fecha.numero }}</button>
+    {% endfor %}
+     <button type="button" href="" class="btn btn-primary btn-block btn-light">+Agregar</button>
+  </div>
+</div>
+{% endblock %}

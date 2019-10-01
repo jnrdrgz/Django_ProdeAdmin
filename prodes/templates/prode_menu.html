@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{prode.nombre}}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <h1>{{prode.nombre}}</h1>        
+</div>
+
+<div class="container-fluid">
+   <div class="row">   
+     <a type="button" href="{% url 'participantes_menu' prode.pk %}" class="btn btn-primary btn-block btn-dark">Participantes</a>
+     <a type="button" href="{% url 'fechas_menu' prode.pk %}" class="btn btn-primary btn-block btn-dark">Fechas</a>
+  </div>
+</div>
+{% endblock %}
