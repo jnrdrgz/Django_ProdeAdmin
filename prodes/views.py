@@ -90,3 +90,31 @@ def agregar_participante(request, pk):
 	}
 
 	return render(request, "agregar_participante.html", context)
+
+def fecha(request, prode_pk, fecha_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	fecha = Fecha.objects.get(pk=fecha_pk)
+	
+	context = {
+		"prode": prode,
+		"fecha": fecha,
+	}
+	return render(request, "fecha.html", context)
+
+def fecha_partidos(request, prode_pk, fecha_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	fecha = Fecha.objects.get(pk=fecha_pk)
+	partidos = Partido.objects.get(fecha=fecha)
+
+	context = {
+		"prode": prode,
+		"fecha": fecha,
+		"partidos": partido
+	}
+
+	return render(request, "fecha_partidos.html", context)
+
+def fecha_tabla(request, prode_pk, fecha_pk):
+	pass
+	#return render(request, "fecha_tabla.html", context)
+
