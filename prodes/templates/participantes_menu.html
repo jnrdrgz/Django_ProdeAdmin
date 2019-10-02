@@ -10,9 +10,9 @@
 <div class="container-fluid">
     <div class="row">
     {% for participante in participantes %}
-    <button type="button" href="" class="btn btn-primary btn-block btn-dark">{{ participante.nombre }}</button>
+    <a type="button" href="" class="btn btn-primary btn-block btn-dark">{{ participante.nombre }}</a>
     {% endfor %}
-     <button type="button" href="" class="btn btn-primary btn-block btn-light">+Agregar</button>
+     <a type="button" href="{% url 'agregar_participante' prode.pk %}" class="btn btn-primary btn-block btn-light">+Agregar</a>
   </div>
 </div>
 {% endblock %}

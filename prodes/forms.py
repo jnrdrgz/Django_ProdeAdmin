@@ -8,3 +8,12 @@ class NuevoProdeForm(forms.Form):
 			"placeholder": "Nombre"
 		})
 	)
+
+class NuevoParticipanteForm(forms.Form):
+	nombre = forms.CharField(
+		max_length=120,
+		widget=forms.TextInput(attrs={
+			"class": "form-control",
+			"placeholder": "Nombre"
+		})
+	)

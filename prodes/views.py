@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from prodes.models import Prode, Participante, Fecha
-from prodes.forms import NuevoProdeForm
+from prodes.forms import NuevoProdeForm, NuevoParticipanteForm
 
 # Create your views here.
 
@@ -61,3 +61,32 @@ def agregar_prode(request):
 		"form": form,
 	}
 	return render(request, "agregar_prode.html", context)
+
+def agregar_participante(request, pk):
+	form = NuevoParticipanteForm()
+	prode = Prode.objects.get(pk=pk)
+		
+	if request.method == "POST":	
+		form = NuevoParticipanteForm(request.POST)
+		if form.is_valid():
+			participante = Participante(
+				nombre = form.cleaned_data["nombre"],
+			)
+
+
+			participante.save()
+			prode.participantes.add(participante)
+			prode.save()
+
+			context = {
+				'prode': prode
+			}
+
+			return render(request, "prode_menu.html", context)
+
+	context = {
+		"prode": prode,
+		"form": form,
+	}
+
+	return render(request, "agregar_participante.html", context)

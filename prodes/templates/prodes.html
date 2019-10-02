@@ -12,7 +12,7 @@
     {% for prode in prodes %}
     <a type="button" href="{% url 'prode_menu' prode.pk %}" class="btn btn-primary btn-block btn-dark">{{ prode.nombre }}</a>
     {% endfor %}
-     <a type="button" href="" class="btn btn-primary btn-block btn-light">+Agregar</a>
+     <a type="button" href="/agregar_prode/" class="btn btn-primary btn-block btn-light">+Agregar</a>
   </div>
 </div>
 {% endblock %}
