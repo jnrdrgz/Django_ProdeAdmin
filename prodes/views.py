@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from prodes.models import Prode, Participante, Fecha
+from prodes.models import *
 from prodes.forms import NuevoProdeForm, NuevoParticipanteForm
 
 # Create your views here.
@@ -104,12 +104,12 @@ def fecha(request, prode_pk, fecha_pk):
 def fecha_partidos(request, prode_pk, fecha_pk):
 	prode = Prode.objects.get(pk=prode_pk)
 	fecha = Fecha.objects.get(pk=fecha_pk)
-	partidos = Partido.objects.get(fecha=fecha)
+	partidos = Partido.objects.filter(fecha=fecha)
 
 	context = {
 		"prode": prode,
 		"fecha": fecha,
-		"partidos": partido
+		"partidos": partidos
 	}
 
 	return render(request, "fecha_partidos.html", context)
