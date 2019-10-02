@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from prodes.models import Prode, Participante, Fecha
+from prodes.forms import NuevoProdeForm
+
 # Create your views here.
 
 def prodes(request):
@@ -36,3 +38,26 @@ def fechas_menu(request, pk):
 	}
 	
 	return render(request, "fechas_menu.html", context)
+
+def agregar_prode(request):
+	form = NuevoProdeForm()
+	if request.method == "POST":
+		form = NuevoProdeForm(request.POST)
+		if form.is_valid():
+			prode = Prode(
+				nombre = form.cleaned_data["nombre"]
+			)
+
+			prode.save()
+
+			prodes = Prode.objects.all()
+			context = {
+				'prodes': prodes
+			}
+
+			return render(request, "prodes.html", context)
+
+	context = {
+		"form": form,
+	}
+	return render(request, "agregar_prode.html", context)
