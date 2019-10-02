@@ -10,6 +10,7 @@ urlpatterns = [
 	path("<int:pk>/fechas/", views.fechas_menu, name="fechas_menu"),
 	path("<int:prode_pk>/fechas/<int:fecha_pk>/", views.fecha, name="fecha"),
 	path("<int:prode_pk>/fechas/<int:fecha_pk>/partidos/", views.fecha_partidos, name="fecha_partidos"),
+	path("<int:prode_pk>/fechas/<int:fecha_pk>/agregar_partido/", views.agregar_partido, name="agregar_partido"),
 ]
 
 

@@ -17,3 +17,28 @@ class NuevoParticipanteForm(forms.Form):
 			"placeholder": "Nombre"
 		})
 	)
+
+class NuevoPartidoForm(forms.Form):
+	local = forms.CharField(
+		max_length=120,
+		widget=forms.TextInput(attrs={
+			"class": "form-control",
+			"placeholder": "Local"
+		})
+	)
+
+	visitante = forms.CharField(
+		max_length=120,
+		widget=forms.TextInput(attrs={
+			"class": "form-control",
+			"placeholder": "Visitante"
+		})
+	)
+
+	resultado = forms.CharField(
+		max_length=10,
+		widget=forms.TextInput(attrs={
+			"class": "form-control",
+			"placeholder": ""
+		})
+	)	

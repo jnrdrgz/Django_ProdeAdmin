@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from prodes.models import *
-from prodes.forms import NuevoProdeForm, NuevoParticipanteForm
+from prodes.forms import NuevoProdeForm, NuevoParticipanteForm, NuevoPartidoForm
 
 # Create your views here.
 
@@ -118,3 +118,28 @@ def fecha_tabla(request, prode_pk, fecha_pk):
 	pass
 	#return render(request, "fecha_tabla.html", context)
 
+def agregar_partido(request, prode_pk, fecha_pk):
+	form = NuevoPartidoForm()
+	prode = Prode.objects.get(pk=prode_pk)
+	fecha = Fecha.objects.get(pk=fecha_pk)
+	partidos = Partido.objects.filter(fecha=fecha)
+
+	if request.method == "POST":	
+		form = NuevoPartidoForm(request.POST)
+		if form.is_valid():
+			partido = Partido(
+				local=form.cleaned_data["local"],
+				visitante=form.cleaned_data["visitante"],
+				resultado=form.cleaned_data["resultado"],
+				fecha=fecha
+			)
+			
+			partido.save()	
+
+	context = {
+		"prode": prode,
+		"fecha": fecha,
+		"form": form,
+		"partidos": partidos
+	}				
+	return render(request, "agregar_partido.html", context)
