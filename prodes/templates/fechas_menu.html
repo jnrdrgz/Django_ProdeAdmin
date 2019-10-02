@@ -12,7 +12,7 @@
     {% for fecha in fechas %}
     <a type="button" href="{{fecha.pk}}/" class="btn btn-primary btn-block btn-dark">{{ fecha.numero }}</a>
     {% endfor %}
-     <a type="button" href="" class="btn btn-primary btn-block btn-light">+Agregar</a>
+     <a type="button" href="{% url 'agregar_fecha' prode.pk %}" class="btn btn-primary btn-block btn-light">+Agregar</a>
   </div>
 </div>
 {% endblock %}

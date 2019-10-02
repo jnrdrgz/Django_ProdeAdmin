@@ -9,6 +9,13 @@ class NuevoProdeForm(forms.Form):
 		})
 	)
 
+class NuevaFechaForm(forms.Form):
+	numero = forms.IntegerField(
+		widget=forms.TextInput(attrs={
+			"class": "form-control"
+		})
+	)
+
 class NuevoParticipanteForm(forms.Form):
 	nombre = forms.CharField(
 		max_length=120,
@@ -32,7 +39,8 @@ class NuevoPartidoForm(forms.Form):
 		widget=forms.TextInput(attrs={
 			"class": "form-control",
 			"placeholder": "Visitante"
-		})
+		}),
+		required=False
 	)
 
 	resultado = forms.CharField(

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from prodes.models import *
-from prodes.forms import NuevoProdeForm, NuevoParticipanteForm, NuevoPartidoForm
+from prodes.forms import *
 
 # Create your views here.
 
@@ -31,13 +31,36 @@ def participantes_menu(request, pk):
 
 def fechas_menu(request, pk):
 	prode = Prode.objects.get(pk=pk)
-	fechas = Fecha.objects.filter(prode=prode)
+	fechas = Fecha.objects.filter(prode=prode).order_by("-numero")
 	context = {
 		'prode': prode,
 		'fechas': fechas
 	}
 	
 	return render(request, "fechas_menu.html", context)
+
+def agregar_fecha(request, pk):
+	prode = Prode.objects.get(pk=pk)
+	fechas = Fecha.objects.filter(prode=prode)
+	form = NuevaFechaForm()
+	
+	if request.method == "POST":
+		form = NuevaFechaForm(request.POST)
+		if form.is_valid():
+			fecha = Fecha(
+				numero = form.cleaned_data["numero"],
+				prode = prode
+			)
+
+			fecha.save()
+
+			return fechas_menu(request, pk)
+
+	context = {
+		"prode": prode,
+		"form": form,
+	}
+	return render(request, "agregar_fecha.html", context)
 
 def agregar_prode(request):
 	form = NuevoProdeForm()
@@ -50,17 +73,19 @@ def agregar_prode(request):
 
 			prode.save()
 
-			prodes = Prode.objects.all()
 			context = {
-				'prodes': prodes
+				'prode': prode
 			}
 
-			return render(request, "prodes.html", context)
+			return render(request, "prode_menu.html", context)
 
 	context = {
+		"prode": prode,
 		"form": form,
 	}
-	return render(request, "agregar_prode.html", context)
+
+	return render(request, "agregar_fecha.html", context)
+
 
 def agregar_participante(request, pk):
 	form = NuevoParticipanteForm()
