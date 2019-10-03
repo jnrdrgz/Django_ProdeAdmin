@@ -33,7 +33,7 @@ def participantes_menu(request, pk):
 
 def fechas_menu(request, pk):
 	prode = Prode.objects.get(pk=pk)
-	fechas = Fecha.objects.filter(prode=prode).order_by("-numero")
+	fechas = Fecha.objects.filter(prode=prode).order_by("numero")
 	context = {
 		'prode': prode,
 		'fechas': fechas
@@ -183,7 +183,7 @@ def participante(request, prode_pk, participante_pk):
 
 def pronosticos_menu(request, prode_pk, participante_pk):
 	prode = Prode.objects.get(pk=prode_pk)
-	fechas = Fecha.objects.filter(prode=prode).order_by("-numero")
+	fechas = Fecha.objects.filter(prode=prode).order_by("numero")
 	participante = Participante.objects.get(pk=participante_pk)
 	context = {
 		'prode': prode,
