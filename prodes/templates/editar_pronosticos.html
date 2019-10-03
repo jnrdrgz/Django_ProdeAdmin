@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}FECHA {{fecha.numero}} - PARTIDOS{% endblock %}
+
+{% block content %}
+
+<h2>PRODE {{prode.nombre}} - FECHA {{fecha.numero}} - PARTIDOS</h2>
+
+<div class="container bg-dark">
+{% for real,v in pp.items %}
+	<div class="row bg-secondary text-white">
+	
+	<div class="col">
+		<h4 class="text-left">{{real.local}}</h4>
+	</div>
+	
+
+	<div class="col"> 
+		{% if v %}
+			{% if v.pk == p_pk %}
+				  <form action="" method="post">
+        			{% csrf_token %}
+        			<div class="form-group">
+            			{{ form.resultado }}
+        			</div>
+
+        		<button type="submit" class="btn btn-primary">Submit</button>
+
+   				 </form>
+			{% else %}
+		
+				<h4 class="text-center">	{{v.resultado}}</h4>
+			{% endif %}	
+	  		
+  		{% else %}
+			<h4 class="text-center">-</h4>
+  		{% endif %}	
+	</div> 
+	<div class="col"> 
+		{% if k.resultado %}
+			<h4 class="text-center">{{real.resultado}}</h4>
+  		{% else %}
+			<h4 class="text-center">-</h4>
+  		{% endif %}	
+	</div> 
+	
+	<div class="col">
+		<h4 class="text-right">{{real.visitante}}</h4>
+	</div>
+	<div class="col-1">
+		<a type="button" href="" class="btn btn-primary btn-block btn-dark">E</a>
+	</div>
+	<div class="col-1">
+		<a type="button" href="" class="btn btn-primary btn-block btn-dark">D</a>
+	</div>
+	</div>
+{% endfor %}
+	
+</div>
+{% endblock %}

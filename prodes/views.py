@@ -222,3 +222,66 @@ def pronosticos(request, prode_pk, participante_pk, fecha_pk):
 	}
 
 	return render(request, "pronosticos.html", context)
+
+def editar_pronosticos(request, prode_pk, participante_pk, fecha_pk, pronostico_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	participante = Participante.objects.get(pk=participante_pk)
+	fecha = Fecha.objects.get(pk=fecha_pk)
+	partidos = Partido.objects.filter(fecha=fecha)
+	_pronosticos = Pronostico.objects.filter(participante=participante,partido__in=partidos)
+
+	form = EditarPronosticoForm()
+	
+	if request.method == "POST":
+		form = EditarPronosticoForm(request.POST)
+		if form.is_valid():
+			_pronostico = Pronostico.objects.get(pk=pronostico_pk)
+			_pronostico.resultado = form.cleaned_data["resultado"]
+
+			_pronostico.save()
+
+			return pronosticos(request, prode_pk, participante_pk, fecha_pk)
+			'''_pron = []
+			for pa in partidos:
+				for pr in pronosticos:
+					if pa == pr.partido:
+						_pron.append(pr)
+						continue
+				_pron.append(None)
+
+			partido_pronostico = dict(zip(partidos, _pron))
+			
+			context = {
+				"prode": prode,
+				"participante": participante,
+				"partidos": partidos,
+				"pronosticos": pronosticos,
+				"pp": partido_pronostico
+			}
+			return render(request, "pronosticos.html", context)'''
+
+	_pron = []
+	for pa in partidos:
+		for pr in _pronosticos:
+			if pa == pr.partido:
+				_pron.append(pr)
+				continue
+		_pron.append(None)
+
+	partido_pronostico = dict(zip(partidos, _pron))
+	print(partido_pronostico)
+	
+	context = {
+		"prode": prode,
+		"participante": participante,
+		"partidos": partidos,
+		"pronosticos": _pronosticos,
+		"pp": partido_pronostico,
+		"p_pk": pronostico_pk,
+		"form": form,
+	}
+
+	return render(request, "editar_pronosticos.html", context)
+
+def nuevo_pronostico(request):
+	pass

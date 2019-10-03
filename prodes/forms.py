@@ -49,4 +49,14 @@ class NuevoPartidoForm(forms.Form):
 			"placeholder": ""
 		}),
 		required=False
-	)	
+	)
+
+class EditarPronosticoForm(forms.Form):
+	resultado = forms.CharField(
+		max_length=10,
+		widget=forms.TextInput(attrs={
+			"class": "form-control",
+			"placeholder": ""
+		}),
+		required=False
+	)

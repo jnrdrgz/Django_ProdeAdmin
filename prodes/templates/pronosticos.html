@@ -33,8 +33,21 @@
 	<div class="col">
 		<h4 class="text-right">{{k.visitante}}</h4>
 	</div>
+	<div class="col-1">
+		{% if v.pk %}
+		<a type="button" href="editar/{{v.pk}}/" class="btn btn-primary btn-block btn-dark">E</a>
+		{% else %}
+		<a type="button" href="nuevo/" class="btn btn-primary btn-block btn-dark">E</a>
+		{% endif %}
+	</div>
+	<div class="col-1">
+		{% if v.pk %}
+		<a type="button" href="eliminar/{{v.pk}}/" class="btn btn-primary btn-block btn-dark">X</a>
+		{% else %}
+		<a type="button" href="error/" class="btn btn-primary btn-block btn-dark">X</a>
+		{% endif %}
+	</div>
 	</div>
 {% endfor %}
-	<a type="button" href="" class="btn btn-primary btn-block btn-dark">Editar Pronosticos</a>
 </div>
 {% endblock %}
