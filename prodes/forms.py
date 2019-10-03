@@ -39,8 +39,7 @@ class NuevoPartidoForm(forms.Form):
 		widget=forms.TextInput(attrs={
 			"class": "form-control",
 			"placeholder": "Visitante"
-		}),
-		required=False
+		})
 	)
 
 	resultado = forms.CharField(
@@ -48,5 +47,6 @@ class NuevoPartidoForm(forms.Form):
 		widget=forms.TextInput(attrs={
 			"class": "form-control",
 			"placeholder": ""
-		})
+		}),
+		required=False
 	)	
