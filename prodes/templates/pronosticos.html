@@ -1,0 +1,45 @@
+{% for pronostico in pronosticos %}
+{{pronostico.partido.local}} {{pronostico.resultado}}
+{{pronostico.partido.visitante}}<br>
+{{pronostico.partido.resultado}}
+{% endfor %}
+
+<br>
+<br>
+<br>
+
+{% for partido in partidos %}
+
+{{partido.local}} - {{partido.visitante}}<br>
+{% endfor %}
+
+<br>
+<br>
+<br>
+
+
+{% for partido in partidos %}
+	{% for pronostico in pronosticos %}
+		{% if pronostico.partido == partido %}
+			{{pronostico.partido.local}} {{pronostico.resultado}} {{pronostico.partido.visitante}}<br>
+		{% endif %}
+	{% endfor %}
+
+{{partido.local}} - {{partido.visitante}}<br>
+
+{% endfor %}
+
+<br>
+<br>
+<br>
+
+
+{% for k,v in pp.items %}
+	{% if v %}
+		{{k.local}} {{v.resultado}} {{k.visitante}} <br>
+	{% else %}
+		{{k.local}} - {{k.visitante}} <br>
+	{% endif%}
+{% endfor %}
+
+<br>

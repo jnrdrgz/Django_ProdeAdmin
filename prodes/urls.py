@@ -8,6 +8,7 @@ urlpatterns = [
 	path("<int:pk>/participantes/", views.participantes_menu, name="participantes_menu"),
 	path("<int:prode_pk>/participantes/<int:participante_pk>/", views.participante, name="participante"),
 	path("<int:prode_pk>/participantes/<int:participante_pk>/pronosticos", views.pronosticos_menu, name="pronosticos_menu"),
+	path("<int:prode_pk>/participantes/<int:participante_pk>/<int:fecha_pk>", views.pronosticos, name="pronosticos"),
 	path("<int:pk>/agregar_participante/", views.agregar_participante, name="agregar_participante"),
 	path("<int:pk>/fechas/", views.fechas_menu, name="fechas_menu"),
 	path("<int:pk>/agregar_fecha/", views.agregar_fecha, name="agregar_fecha"),

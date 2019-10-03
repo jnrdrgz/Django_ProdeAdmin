@@ -1,6 +1,8 @@
+import itertools
 from django.shortcuts import render
 from prodes.models import *
 from prodes.forms import *
+
 
 # Create your views here.
 
@@ -190,3 +192,31 @@ def pronosticos_menu(request, prode_pk, participante_pk):
 	}
 	
 	return render(request, "pronosticos_menu.html", context)
+
+
+def pronosticos(request, prode_pk, participante_pk, fecha_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	participante = Participante.objects.get(pk=participante_pk)
+	fecha = Fecha.objects.get(pk=fecha_pk)
+	partidos = Partido.objects.filter(fecha=fecha)
+	pronosticos = Pronostico.objects.filter(participante=participante,partido__in=partidos)
+
+	#partidos_ya_pronosticados = []
+		
+	#pp = [p.partido for p in pronosticos]
+
+	#partido_pronostico = dict([(y,x.resultado) if x.local==y.local and x.visitante==y.visitante else (y,None) for x in partidos for y in [p.partido for p in pronosticos]])
+	#print(partido_pronostico)
+	#partido_pronostico = dict([(x,y) if y==x else (x,None) for x in b for y in a])
+
+	partido_pronostico = dict(itertools.zip_longest(partidos, pronosticos))
+
+	context = {
+		"prode": prode,
+		"participante": participante,
+		"partidos": partidos,
+		"pronosticos": pronosticos,
+		"pp": partido_pronostico
+	}
+
+	return render(request, "pronosticos.html", context)
