@@ -168,3 +168,25 @@ def agregar_partido(request, prode_pk, fecha_pk):
 		"partidos": partidos
 	}				
 	return render(request, "agregar_partido.html", context)
+
+def participante(request, prode_pk, participante_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	participante = Prode.objects.get(pk=participante_pk)
+	context = {
+		"prode": prode,
+		"participante": participante,
+	}
+
+	return render(request, "participante.html", context)
+
+def pronosticos_menu(request, prode_pk, participante_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	fechas = Fecha.objects.filter(prode=prode).order_by("-numero")
+	participante = Participante.objects.get(pk=participante_pk)
+	context = {
+		'prode': prode,
+		'fechas': fechas,
+		'participante': participante,
+	}
+	
+	return render(request, "pronosticos_menu.html", context)

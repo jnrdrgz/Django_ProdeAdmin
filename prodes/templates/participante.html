@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}PARTICIPANTE {{participante.nombre}}{% endblock %}
+
+{% block content %}
+
+<h2>PRODE {{prode.nombre}} - {{participante.nombre}}</h2>
+
+<a type="button" href="pronosticos" class="btn btn-primary btn-block btn-dark">PRONÓSTICOS</a>
+<a type="button" href="tabla" class="btn btn-primary btn-block btn-dark">ESTADÍSTICAS</a>
+
+{% endblock %}
