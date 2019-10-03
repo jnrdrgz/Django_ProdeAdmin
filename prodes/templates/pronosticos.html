@@ -1,9 +1,40 @@
-{% for k,v in pp.items %}
-	{% if v %}
-		{{k.local}} {{v.resultado}} {{k.visitante}} <br>
-	{% else %}
-		{{k.local}} - {{k.visitante}} <br>
-	{% endif%}
-{% endfor %}
+{% extends "base.html" %}
 
-<br>
+{% block title %}FECHA {{fecha.numero}} - PARTIDOS{% endblock %}
+
+{% block content %}
+
+<h2>PRODE {{prode.nombre}} - FECHA {{fecha.numero}} - PARTIDOS</h2>
+
+<div class="container bg-dark">
+{% for k,v in pp.items %}
+	<div class="row bg-secondary text-white">
+	
+	<div class="col">
+		<h4 class="text-left">{{k.local}}</h4>
+	</div>
+	
+
+	<div class="col"> 
+		{% if v %}
+			<h4 class="text-center">{{v.resultado}}</h4>
+  		{% else %}
+			<h4 class="text-center">-</h4>
+  		{% endif %}	
+	</div> 
+	<div class="col"> 
+		{% if k.resultado %}
+			<h4 class="text-center">{{k.resultado}}</h4>
+  		{% else %}
+			<h4 class="text-center">-</h4>
+  		{% endif %}	
+	</div> 
+	
+	<div class="col">
+		<h4 class="text-right">{{k.visitante}}</h4>
+	</div>
+	</div>
+{% endfor %}
+	<a type="button" href="" class="btn btn-primary btn-block btn-dark">Editar Pronosticos</a>
+</div>
+{% endblock %}

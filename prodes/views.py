@@ -201,15 +201,17 @@ def pronosticos(request, prode_pk, participante_pk, fecha_pk):
 	partidos = Partido.objects.filter(fecha=fecha)
 	pronosticos = Pronostico.objects.filter(participante=participante,partido__in=partidos)
 
-	#partidos_ya_pronosticados = []
-		
-	#pp = [p.partido for p in pronosticos]
+	_pron = []
+	for pa in partidos:
+		for pr in pronosticos:
+			if pa == pr.partido:
+				_pron.append(pr)
+				continue
+		_pron.append(None)
 
-	#partido_pronostico = dict([(y,x.resultado) if x.local==y.local and x.visitante==y.visitante else (y,None) for x in partidos for y in [p.partido for p in pronosticos]])
-	#print(partido_pronostico)
-	#partido_pronostico = dict([(x,y) if y==x else (x,None) for x in b for y in a])
-
-	partido_pronostico = dict(itertools.zip_longest(partidos, pronosticos))
+	partido_pronostico = dict(zip(partidos, _pron))
+	print(partido_pronostico)
+	#partido_pronostico = dict(itertools.zip_longest(partidos, pronosticos))
 
 	context = {
 		"prode": prode,
