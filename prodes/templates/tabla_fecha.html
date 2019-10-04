@@ -12,7 +12,7 @@
       <tr>
       	<th></th>
       	{% for partido in partidos %}
-        	<th>{{partido.local}}-{{partido.visitante}}</th>
+        	<th>{{partido.local|slice:3|upper }}-{{partido.visitante|slice:3|upper}}</th>
         {% endfor %}
       </tr>
     </thead>

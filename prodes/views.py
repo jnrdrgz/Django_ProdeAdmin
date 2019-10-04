@@ -390,8 +390,6 @@ def tabla_fecha(request, prode_pk, fecha_pk):
 
 
 		pronosticos_participantes[k] = f
-
-
 	
 	print(pronosticos_participantes)
 	context = {

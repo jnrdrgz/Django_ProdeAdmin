@@ -1,1 +1,0 @@
-[Parent 17869, Gecko_IOThread] WARNING: pipe error (116): Connection reset by peer: file /builds/worker/workspace/build/src/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 358
