@@ -126,6 +126,7 @@ def fecha(request, prode_pk, fecha_pk):
 		"prode": prode,
 		"fecha": fecha,
 	}
+
 	return render(request, "fecha.html", context)
 
 def fecha_partidos(request, prode_pk, fecha_pk):
@@ -173,7 +174,7 @@ def agregar_partido(request, prode_pk, fecha_pk):
 
 def participante(request, prode_pk, participante_pk):
 	prode = Prode.objects.get(pk=prode_pk)
-	participante = Prode.objects.get(pk=participante_pk)
+	participante = Participante.objects.get(pk=participante_pk)
 	context = {
 		"prode": prode,
 		"participante": participante,
@@ -218,6 +219,7 @@ def pronosticos(request, prode_pk, participante_pk, fecha_pk):
 			if pa == pr.partido:
 				_pron[pa] = pr
 				break
+		if not pa in _pron.keys():
 			_pron[pa] = None
 
 	for k,v in _pron.items():
@@ -264,10 +266,10 @@ def editar_pronosticos(request, prode_pk, participante_pk, fecha_pk, pronostico_
 			if pa == pr.partido:
 				_pron[pa] = pr
 				break
+		if not pa in _pron.keys():
 			_pron[pa] = None
 
-	partido_pronostico = dict(zip(partidos, _pron))
-	
+	partido_pronostico = _pron
 	context = {
 		"prode": prode,
 		"participante": participante,
@@ -313,6 +315,7 @@ def nuevo_pronostico(request, prode_pk, participante_pk, fecha_pk, partido_pk):
 			if pa == pr.partido:
 				_pron[pa] = pr
 				break
+		if not pa in _pron.keys():
 			_pron[pa] = None
 
 
