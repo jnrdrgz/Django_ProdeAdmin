@@ -16,8 +16,8 @@
 	
 
 	<div class="col"> 
-		{% if v %}
-			{% if v.pk == p_pk %}
+		{% if nuevo %}
+			{% if real.pk == p_pk %}
 				  <form action="" method="post">
         			{% csrf_token %}
         			<div class="form-group">
@@ -30,11 +30,29 @@
 			{% else %}
 		
 				<h4 class="text-center">	{{v.resultado}}</h4>
+			{% endif %}
+  		{% else %}
+  			{% if v %}
+				{% if v.pk == p_pk %}
+				  <form action="" method="post">
+        			{% csrf_token %}
+        			<div class="form-group">
+            			{{ form.resultado }}
+        			</div>
+
+        		<button type="submit" class="btn btn-primary" >Submit</button>
+
+   				 </form>
+			{% else %}
+		
+				<h4 class="text-center">	{{v.resultado}}</h4>
 			{% endif %}	
 	  		
-  		{% else %}
-			<h4 class="text-center">-</h4>
-  		{% endif %}	
+  			{% else %}
+				<h4 class="text-center">-</h4>
+  			{% endif %}
+  		{% endif %}
+				
 	</div> 
 	<div class="col"> 
 		{% if k.resultado %}
