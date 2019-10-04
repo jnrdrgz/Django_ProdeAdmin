@@ -16,22 +16,29 @@
 	
 
 	<div class="col"> 
-		{% if partido.resultado %}
-			<h4 class="text-center">{{partido.resultado}}</h4>
-  		{% else %}
-			<h4 class="text-center">-</h4>
+		{% if partido.pk == partido_pk %}
+			<form action="" method="post">
+        			{% csrf_token %}
+        			<div class="form-group">
+            			{{ form.resultado }}
+        			</div>
+
+        		<button type="submit" class="btn btn-primary">Submit</button>
+
+   				 </form>
+			{% else %}
+				{% if partido.resultado %}
+				<h4 class="text-center">{{partido.resultado}}</h4>
+  					{% else %}
+				<h4 class="text-center">-</h4>
+  			{% endif %}
   		{% endif %}	
 	</div> 
 	
 	<div class="col">
 		<h4 class="text-right">{{partido.visitante}}</h4>
 	</div>
-	<div class="col-1">
-		<a type="button" href="editar/{{partido.pk}}/" class="btn btn-primary btn-block btn-dark">E</a>
-	</div>
-	<div class="col-1">
-		<a type="button" href="eliminar/{{partido.pk}}/" class="btn btn-primary btn-block btn-dark">X</a>
-	</div>
+	
 	</div>
 {% endfor %}
 	<a type="button" href="../agregar_partido/" class="btn btn-primary btn-block btn-dark">+Agregar</a>

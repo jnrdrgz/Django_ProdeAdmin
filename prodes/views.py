@@ -341,3 +341,29 @@ def nuevo_pronostico(request, prode_pk, participante_pk, fecha_pk, partido_pk):
 	}
 
 	return render(request, "editar_pronosticos.html", context)
+
+def editar_partido(request, prode_pk, fecha_pk, partido_pk):
+	form = EditarPronosticoForm()
+	prode = Prode.objects.get(pk=prode_pk)
+	fecha = Fecha.objects.get(pk=fecha_pk)
+	partidos = Partido.objects.filter(fecha=fecha)
+
+	if request.method == "POST":	
+		form = EditarPronosticoForm(request.POST)
+		if form.is_valid():
+			part = Partido.objects.get(pk=partido_pk) 
+
+			part.resultado=form.cleaned_data["resultado"]
+			
+			part.save()
+
+			return fecha_partidos(request, prode_pk, fecha_pk)	
+
+	context = {
+		"prode": prode,
+		"fecha": fecha,
+		"form": form,
+		"partidos": partidos,
+		"partido_pk": partido_pk
+	}				
+	return render(request, "editar_partido.html", context)

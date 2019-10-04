@@ -17,6 +17,5 @@ urlpatterns = [
 	path("<int:prode_pk>/fechas/<int:fecha_pk>/", views.fecha, name="fecha"),
 	path("<int:prode_pk>/fechas/<int:fecha_pk>/partidos/", views.fecha_partidos, name="fecha_partidos"),
 	path("<int:prode_pk>/fechas/<int:fecha_pk>/agregar_partido/", views.agregar_partido, name="agregar_partido"),
+	path("<int:prode_pk>/fechas/<int:fecha_pk>/partidos/editar/<int:partido_pk>/", views.editar_partido, name="editar_partido"),	
 ]
-
-
