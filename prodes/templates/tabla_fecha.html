@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}FECHA {{fecha.numero}} - TABLA{% endblock %}
+
+{% block content %}
+
+<h2>PRODE {{prode.nombre}} - FECHA {{fecha.numero}} - TABLA</h2>
+
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+      	<th></th>
+      	{% for partido in partidos %}
+        	<th>{{partido.local}}-{{partido.visitante}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+    		
+    	{% for part, pron in pronosticos_participantes.items %}
+      			 <tr>
+       	
+      			 <td>{{part.nombre}}</td>
+       			
+       			{%for p in pron%}
+       				{%if p%}
+      			 		<td>{{p.resultado}}</td>
+      			 	{% else %}
+      			 		<td> - </td>
+      			 	{%endif%}
+       			{% endfor %}
+      			
+        	
+      			</tr>
+      {% endfor %}
+ 		     
+    </tbody>
+  </table>
+</div>
+{% endblock %}

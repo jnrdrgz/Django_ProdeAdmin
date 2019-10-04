@@ -367,3 +367,37 @@ def editar_partido(request, prode_pk, fecha_pk, partido_pk):
 		"partido_pk": partido_pk
 	}				
 	return render(request, "editar_partido.html", context)
+
+def tabla_fecha(request, prode_pk, fecha_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	fecha = Fecha.objects.get(pk=fecha_pk)
+	partidos = Partido.objects.filter(fecha=fecha)
+	participantes = Participante.objects.filter(prode=prode)
+	
+	pronosticos_participantes = {x: Pronostico.objects.filter(participante=x,partido__in=partidos) for x in participantes}
+	
+	for k,v in pronosticos_participantes.items():
+		f = []
+		aux = False
+		for part in partidos:
+			for p in v:
+				if p.partido == part:
+					f.append(p)
+					aux = True
+			if not aux:
+				f.append(None)
+			aux = False
+
+
+		pronosticos_participantes[k] = f
+
+
+	
+	print(pronosticos_participantes)
+	context = {
+		"prode": prode,
+		"fecha": fecha,
+		"partidos": partidos,
+		"pronosticos_participantes": pronosticos_participantes,
+	}
+	return render(request, "tabla_fecha.html", context)	
