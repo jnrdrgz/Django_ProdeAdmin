@@ -1,7 +1,8 @@
-import itertools
+import operator
 from django.shortcuts import render
 from prodes.models import *
 from prodes.forms import *
+
 
 
 # Create your views here.
@@ -408,15 +409,27 @@ def tabla_puntos(request, prode_pk):
 	#participantes = Participante.objects.filter(prode=prode)
 	
 	participante_ptos = {}
+
+	check_s = lambda x,y,op: op(x.split("-")[0],  x.split("-")[1]) and op(y.split("-")[0], y.split("-")[1]) and x != y
 	for participante in participantes:
 		pronosticos = Pronostico.objects.filter(participante=participante,partido__in=partidos)
 		ptos = 0
 		plenos = 0
 		for partido in partidos:
 			for pronostico in pronosticos:
-				if partido == pronostico.partido and partido.resultado == pronostico.resultado:
-					ptos += 3
-					plenos += 1
+
+				if partido == pronostico.partido and partido.resultado != "-" and pronostico.resultado != "-" and partido.resultado != "" and pronostico.resultado != "": 
+					pro = pronostico.resultado
+					par = partido.resultado
+					print(par)
+					print(pro)
+					
+					if par == pro:
+						ptos += 3
+						plenos += 1
+					elif check_s(par, pro, operator.lt) or check_s(par, pro, operator.gt) or check_s(par, pro, operator.eq):
+						ptos += 1
+
 		participante_ptos[participante.nombre] = ptos 
 
 	context = {
