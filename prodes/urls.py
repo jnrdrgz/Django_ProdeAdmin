@@ -5,6 +5,7 @@ urlpatterns = [
 	path('', views.prodes, name="prodes"),
 	path("agregar_prode/", views.agregar_prode, name="agregar_prode"),
 	path("<int:pk>/", views.prode_menu, name="prode_menu"),
+	path("<int:prode_pk>/tabla/", views.tabla_puntos, name="tabla_puntos"),
 	path("<int:pk>/participantes/", views.participantes_menu, name="participantes_menu"),
 	path("<int:prode_pk>/participantes/<int:participante_pk>/", views.participante, name="participante"),
 	path("<int:prode_pk>/participantes/<int:participante_pk>/pronosticos/", views.pronosticos_menu, name="pronosticos_menu"),

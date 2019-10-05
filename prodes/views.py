@@ -399,3 +399,28 @@ def tabla_fecha(request, prode_pk, fecha_pk):
 		"pronosticos_participantes": pronosticos_participantes,
 	}
 	return render(request, "tabla_fecha.html", context)	
+
+def tabla_puntos(request, prode_pk):
+	prode = Prode.objects.get(pk=prode_pk)
+	participantes = prode.participantes.all()
+	fechas = Fecha.objects.filter(prode=prode)
+	partidos = Partido.objects.filter(fecha__in=fechas)
+	#participantes = Participante.objects.filter(prode=prode)
+	
+	participante_ptos = {}
+	for participante in participantes:
+		pronosticos = Pronostico.objects.filter(participante=participante,partido__in=partidos)
+		ptos = 0
+		plenos = 0
+		for partido in partidos:
+			for pronostico in pronosticos:
+				if partido == pronostico.partido and partido.resultado == pronostico.resultado:
+					ptos += 3
+					plenos += 1
+		participante_ptos[participante.nombre] = ptos 
+
+	context = {
+		"prode": prode,
+		"participante_ptos": participante_ptos,
+	}
+	return render(request, "tabla_puntos.html", context)	
