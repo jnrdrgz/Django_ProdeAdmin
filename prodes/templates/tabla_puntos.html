@@ -17,12 +17,13 @@
       </tr>
     </thead>
     <tbody>
-      {% for k,v in participante_ptos.items %}
+      {% for p in participante_ptos %}
         
           <tr>
-          <td>{{k}}</td>
-          <td>{{v}}</td>
-          
+          {%  for e in p %}
+            <td>{{e}}</td>
+          {% endfor %}
+  
           </tr>          
         {% endfor %}
 

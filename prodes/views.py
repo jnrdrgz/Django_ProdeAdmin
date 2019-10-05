@@ -408,7 +408,8 @@ def tabla_puntos(request, prode_pk):
 	partidos = Partido.objects.filter(fecha__in=fechas)
 	#participantes = Participante.objects.filter(prode=prode)
 	
-	participante_ptos = {}
+	#participante_ptos = {}
+	participante_ptos = []
 
 	check_s = lambda x,y,op: op(x.split("-")[0],  x.split("-")[1]) and op(y.split("-")[0], y.split("-")[1]) and x != y
 	for participante in participantes:
@@ -421,8 +422,6 @@ def tabla_puntos(request, prode_pk):
 				if partido == pronostico.partido and partido.resultado != "-" and pronostico.resultado != "-" and partido.resultado != "" and pronostico.resultado != "": 
 					pro = pronostico.resultado
 					par = partido.resultado
-					print(par)
-					print(pro)
 					
 					if par == pro:
 						ptos += 3
@@ -430,8 +429,14 @@ def tabla_puntos(request, prode_pk):
 					elif check_s(par, pro, operator.lt) or check_s(par, pro, operator.gt) or check_s(par, pro, operator.eq):
 						ptos += 1
 
-		participante_ptos[participante.nombre] = ptos 
+		participante_ptos.append([participante.nombre, ptos, plenos]) 
 
+	print(participante_ptos)
+
+	sort_second = lambda arr: arr[1]
+	
+	participante_ptos.sort(key = sort_second, reverse=True)
+	print(participante_ptos)
 	context = {
 		"prode": prode,
 		"participante_ptos": participante_ptos,
