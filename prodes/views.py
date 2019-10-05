@@ -431,10 +431,8 @@ def tabla_puntos(request, prode_pk):
 
 		participante_ptos.append([participante.nombre, ptos, plenos]) 
 
-	print(participante_ptos)
 	
 	participante_ptos.sort(key = lambda arr: (arr[1], arr[2]), reverse=True)
-	print(participante_ptos)
 	context = {
 		"prode": prode,
 		"participante_ptos": participante_ptos,

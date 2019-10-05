@@ -1,4 +1,4 @@
-It's incomplete, I'm working on it.
+Está casi terminado, funciona correctamente pero falta poder eliminar partidos, pronósticos y nombres de participantes, corregir algunos bugs y ordernar los archivos.
 
 To run it:
 ```
