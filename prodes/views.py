@@ -1,5 +1,5 @@
 import operator
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from prodes.models import *
 from prodes.forms import *
 
@@ -76,18 +76,17 @@ def agregar_prode(request):
 
 			prode.save()
 
+			prodes = Prode.objects.all()
 			context = {
-				'prode': prode
+				'prodes': prodes
 			}
 
-			return render(request, "prode_menu.html", context)
+			return render(request, "prodes.html", context)
 
 	context = {
-		"prode": prode,
 		"form": form,
 	}
-
-	return render(request, "agregar_fecha.html", context)
+	return render(request, "agregar_prode.html", context)
 
 
 def agregar_participante(request, pk):
@@ -249,18 +248,6 @@ def editar_pronosticos(request, prode_pk, participante_pk, fecha_pk, pronostico_
 	partidos = Partido.objects.filter(fecha=fecha)
 	_pronosticos = Pronostico.objects.filter(participante=participante,partido__in=partidos)
 
-	form = EditarPronosticoForm()
-	
-	if request.method == "POST":
-		form = EditarPronosticoForm(request.POST)
-		if form.is_valid():
-			_pronostico = Pronostico.objects.get(pk=pronostico_pk)
-			_pronostico.resultado = form.cleaned_data["resultado"]
-
-			_pronostico.save()
-
-			return pronosticos(request, prode_pk, participante_pk, fecha_pk)
-			
 	_pron = {}
 	for pa in partidos:
 		for pr in _pronosticos:
@@ -278,9 +265,33 @@ def editar_pronosticos(request, prode_pk, participante_pk, fecha_pk, pronostico_
 		"pronosticos": _pronosticos,
 		"pp": partido_pronostico,
 		"p_pk": pronostico_pk,
-		"form": form,
 	}
 
+
+	form = EditarPronosticoForm()
+	
+
+	if request.method == "POST":
+		form = EditarPronosticoForm(request.POST)
+		if form.is_valid():
+			_pronostico = Pronostico.objects.get(pk=pronostico_pk)
+			_pronostico.resultado = form.cleaned_data["resultado"]
+
+			_pronostico.save()
+
+			#return redirect(request, "pronosticos.html", context)
+			return redirect("/{}/participantes/{}/pronosticos/{}/".format(prode_pk,participante_pk,fecha_pk))
+
+	context = {
+		"prode": prode,
+		"participante": participante,
+		"partidos": partidos,
+		"pronosticos": _pronosticos,
+		"pp": partido_pronostico,
+		"p_pk": pronostico_pk,
+		"form": form,
+	}
+	
 	return render(request, "editar_pronosticos.html", context)
 
 def nuevo_pronostico(request, prode_pk, participante_pk, fecha_pk, partido_pk):
@@ -290,26 +301,6 @@ def nuevo_pronostico(request, prode_pk, participante_pk, fecha_pk, partido_pk):
 	partidos = Partido.objects.filter(fecha=fecha)
 	_pronosticos = Pronostico.objects.filter(participante=participante,partido__in=partidos)
 
-	form = EditarPronosticoForm()
-	
-	if request.method == "POST":
-		form = EditarPronosticoForm(request.POST)
-		if form.is_valid():
-			partido = Partido.objects.get(pk=partido_pk)
-			
-			print(partido.pk)
-			print("------------------")
-			print(partido.local, partido.visitante)
-			_pronostico = Pronostico(
-				resultado=form.cleaned_data["resultado"],
-				participante=participante,
-				partido=partido
-			)
-
-			_pronostico.save()
-
-			return pronosticos(request, prode_pk, participante_pk, fecha_pk)
-			
 	_pron = {}
 	for pa in partidos:
 		for pr in _pronosticos:
@@ -330,6 +321,38 @@ def nuevo_pronostico(request, prode_pk, participante_pk, fecha_pk, partido_pk):
 	partido_pronostico = _pron
 	#partido_pronostico = dict(zip(partidos, _pron))
 	
+	
+
+
+	form = EditarPronosticoForm()
+	
+	if request.method == "POST":
+		form = EditarPronosticoForm(request.POST)
+		if form.is_valid():
+			partido = Partido.objects.get(pk=partido_pk)
+			
+			print(partido.pk)
+			print("------------------")
+			print(partido.local, partido.visitante)
+			_pronostico = Pronostico(
+				resultado=form.cleaned_data["resultado"],
+				participante=participante,
+				partido=partido
+			)
+
+			_pronostico.save()
+
+			#return pronosticos(request, prode_pk, participante_pk, fecha_pk)
+			context = {
+				"prode": prode,
+				"participante": participante,
+				"partidos": partidos,
+				"pronosticos": _pronosticos,
+				"pp": partido_pronostico,
+				"p_pk": partido_pk,
+			}
+			return redirect("/{}/participantes/{}/pronosticos/{}/".format(prode_pk,participante_pk,fecha_pk))
+			
 	context = {
 		"prode": prode,
 		"participante": participante,
@@ -339,8 +362,7 @@ def nuevo_pronostico(request, prode_pk, participante_pk, fecha_pk, partido_pk):
 		"p_pk": partido_pk,
 		"form": form,
 		"nuevo": True,
-	}
-
+	}	
 	return render(request, "editar_pronosticos.html", context)
 
 def editar_partido(request, prode_pk, fecha_pk, partido_pk):
